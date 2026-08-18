@@ -29,3 +29,6 @@ Homestead.yaml
 Thumbs.db
 claude.md
 boost.json
+POS_SYSTEM_PROMPT.md
+task_progress_checklist.md
+terminal.tsx

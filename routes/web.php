@@ -7,8 +7,12 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\Pos\PurchaseInvoiceController;
+use App\Http\Controllers\Pos\SaleInvoiceController;
+use App\Http\Controllers\Pos\ThermalReceiptController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReturnExchangeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
@@ -54,10 +58,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-    Route::get('/return-exchanges', [\App\Http\Controllers\ReturnExchangeController::class, 'index'])->name('return-exchanges.index');
-    Route::get('/return-exchanges/create', [\App\Http\Controllers\ReturnExchangeController::class, 'create'])->name('return-exchanges.create');
-    Route::post('/return-exchanges', [\App\Http\Controllers\ReturnExchangeController::class, 'store'])->name('return-exchanges.store');
-    Route::get('/return-exchanges/{returnExchange}', [\App\Http\Controllers\ReturnExchangeController::class, 'show'])->name('return-exchanges.show');
+    Route::get('/return-exchanges', [ReturnExchangeController::class, 'index'])->name('return-exchanges.index');
+    Route::get('/return-exchanges/create', [ReturnExchangeController::class, 'create'])->name('return-exchanges.create');
+    Route::post('/return-exchanges', [ReturnExchangeController::class, 'store'])->name('return-exchanges.store');
+    Route::get('/return-exchanges/{returnExchange}', [ReturnExchangeController::class, 'show'])->name('return-exchanges.show');
+});
+
+Route::middleware(['auth'])->prefix('pos')->name('pos.')->group(function () {
+    Route::get('purchases/{purchase}/invoice', [PurchaseInvoiceController::class, 'show'])->name('purchases.invoice');
+    Route::get('sales/{sale}/invoice', [SaleInvoiceController::class, 'show'])->name('sales.invoice');
+    Route::get('sales/{sale}/receipt', [ThermalReceiptController::class, 'show'])->name('sales.receipt');
 });
 
 require __DIR__.'/auth.php';

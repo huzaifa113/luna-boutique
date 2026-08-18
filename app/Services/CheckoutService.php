@@ -7,6 +7,7 @@ use App\Models\CartItem;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\StockMovement;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,10 @@ use Illuminate\Validation\ValidationException;
 
 class CheckoutService
 {
+    public function __construct(
+        protected StockService $stockService,
+    ) {}
+
     public function createOrder(User $user, array $data): Order
     {
         $cartItems = CartItem::with('product')->where('user_id', $user->id)->get();
@@ -44,7 +49,7 @@ class CheckoutService
 
             $order = Order::create([
                 'user_id' => $user->id,
-                'order_number' => Str::upper('ORD-' . Str::random(8)),
+                'order_number' => Str::upper('ORD-'.Str::random(8)),
                 'shipping_address_id' => $shippingAddress->id,
                 'billing_address_id' => $billingAddress->id,
                 'coupon_id' => $coupon?->id,
@@ -73,7 +78,7 @@ class CheckoutService
                     'total_price' => $item->quantity * $item->product->price,
                 ]);
 
-                $item->product->decrement('stock_quantity', $item->quantity);
+                $this->stockService->decrease($item->product, (float) $item->quantity, StockMovement::REASON_ONLINE_ORDER, $order);
             }
 
             if ($coupon) {
@@ -88,7 +93,7 @@ class CheckoutService
 
     protected function billingSeparate(array $data): bool
     {
-        return empty($data['billing_same_as_shipping']) ? false : !filter_var($data['billing_same_as_shipping'], FILTER_VALIDATE_BOOLEAN);
+        return empty($data['billing_same_as_shipping']) ? false : ! filter_var($data['billing_same_as_shipping'], FILTER_VALIDATE_BOOLEAN);
     }
 
     protected function validateStock(Collection $cartItems): void
@@ -133,7 +138,7 @@ class CheckoutService
 
         if ($coupon->min_order_amount && $subtotal < $coupon->min_order_amount) {
             throw ValidationException::withMessages([
-                'coupon_code' => 'This coupon requires a minimum order amount of $' . number_format((float) $coupon->min_order_amount, 2) . '.',
+                'coupon_code' => 'This coupon requires a minimum order amount of $'.number_format((float) $coupon->min_order_amount, 2).'.',
             ]);
         }
 
@@ -153,16 +158,16 @@ class CheckoutService
 
         return Address::create([
             'user_id' => $user->id,
-            'first_name' => $data[$prefix . 'first_name'],
-            'last_name' => $data[$prefix . 'last_name'],
-            'company' => $data[$prefix . 'company'] ?? null,
-            'address_line1' => $data[$prefix . 'address_line1'],
-            'address_line2' => $data[$prefix . 'address_line2'] ?? null,
-            'city' => $data[$prefix . 'city'],
-            'state' => $data[$prefix . 'state'] ?? null,
-            'postal_code' => $data[$prefix . 'postal_code'],
-            'country' => $data[$prefix . 'country'],
-            'phone' => $data[$prefix . 'phone'] ?? null,
+            'first_name' => $data[$prefix.'first_name'],
+            'last_name' => $data[$prefix.'last_name'],
+            'company' => $data[$prefix.'company'] ?? null,
+            'address_line1' => $data[$prefix.'address_line1'],
+            'address_line2' => $data[$prefix.'address_line2'] ?? null,
+            'city' => $data[$prefix.'city'],
+            'state' => $data[$prefix.'state'] ?? null,
+            'postal_code' => $data[$prefix.'postal_code'],
+            'country' => $data[$prefix.'country'],
+            'phone' => $data[$prefix.'phone'] ?? null,
             'is_default_billing' => $defaultBilling,
             'is_default_shipping' => $defaultShipping,
         ]);

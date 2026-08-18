@@ -1,0 +1,1 @@
+<?php echo app('Illuminate\Foundation\Vite')(['resources/css/filament.css']); ?><?php /**PATH C:\Projects\ecomm\storage\framework\views/7703ec2bd3a559df86839c3fe968aeec.blade.php ENDPATH**/ ?>

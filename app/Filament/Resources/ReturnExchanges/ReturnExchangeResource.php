@@ -11,6 +11,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ReturnExchangeResource extends Resource
 {
@@ -21,6 +22,8 @@ class ReturnExchangeResource extends Resource
     protected static ?string $navigationLabel = 'Returns & Exchanges';
 
     protected static ?string $pluralModelLabel = 'Returns & Exchanges';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Online Store';
 
     public static function form(Schema $schema): Schema
     {

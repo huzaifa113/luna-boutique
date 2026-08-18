@@ -34,7 +34,7 @@
                                 @endif
                             </div>
                             <div class="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700">
-                                {{ $product->stock_quantity > 0 ? $product->stock_quantity . ' in stock' : 'Out of stock' }}
+                                {{ $product->stock_quantity > 0 ? $product->formatted_stock . ' in stock' : 'Out of stock' }}
                             </div>
                         </div>
                         <p class="text-slate-600">{{ $product->description }}</p>

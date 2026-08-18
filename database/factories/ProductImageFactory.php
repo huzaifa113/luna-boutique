@@ -18,7 +18,9 @@ class ProductImageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'path' => 'https://picsum.photos/seed/' . fake()->unique()->word() . '/400/400',
+            'is_primary' => true,
+            'sort_order' => 0,
         ];
     }
 }

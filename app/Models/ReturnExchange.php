@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\StockService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,8 +24,11 @@ class ReturnExchange extends Model
     ];
 
     const STATUS_PENDING = 'pending';
+
     const STATUS_ITEMS_RECEIVED = 'items_received';
+
     const STATUS_APPROVED = 'approved';
+
     const STATUS_REJECTED = 'rejected';
 
     const REASONS = [
@@ -69,11 +73,18 @@ class ReturnExchange extends Model
     {
         $this->loadMissing('items.orderItem.product');
 
+        $stockService = app(StockService::class);
+
         foreach ($this->items as $item) {
             $product = $item->orderItem?->product;
 
             if ($product) {
-                $product->increment('stock_quantity', $item->quantity);
+                $stockService->increase(
+                    $product,
+                    (float) $item->quantity,
+                    StockMovement::REASON_ONLINE_RETURN,
+                    $this
+                );
             }
         }
     }

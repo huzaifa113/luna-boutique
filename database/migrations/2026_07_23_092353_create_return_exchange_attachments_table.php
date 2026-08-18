@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('return_exchange_attachments')) {
+            return;
+        }
+
         Schema::create('return_exchange_attachments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('return_exchange_id')->constrained('return_exchanges')->cascadeOnDelete();
