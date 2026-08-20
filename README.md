@@ -31,12 +31,24 @@
 - **Product Reviews** — Customers can rate and review purchased products
 - **Returns & Exchanges** — Submit return/exchange requests with attachments
 - **Contact & Newsletter** — Contact form and newsletter subscription
+<img width="1918" height="1007" alt="image" src="https://github.com/user-attachments/assets/96aa5fa2-6853-482d-af0a-0ed41bcf16c8" />
+
+
+### 🎛️ Filament Admin Panel
+- **Dashboard** — Store stats overview, revenue chart, orders-by-status chart, top products, and latest orders
+- **Full CRUD Resources** — Products, Categories, Brands, Orders, Customers, Vendors, Purchases, Sales, Coupons, Reviews, Returns/Exchanges, Stock Movements, Users, and more
+- **Inventory Management Page** — Dedicated inventory view with stock controls
+- **POS Terminal Page** — In-panel POS access for staff
+<img width="1890" height="1001" alt="image" src="https://github.com/user-attachments/assets/8b8228da-1ca2-4922-bc37-6d7b96e01951" />
+
 
 ### 🏪 Point of Sale (POS)
 - **POS Terminal** — Fast, keyboard-friendly sales interface for in-store transactions
 - **Customer Management** — Create and manage walk-in customers
 - **Sales & Payments** — Record sales, track customer payments, and manage balances
 - **Invoice Generation** — Formatted invoices with configurable company details, currency (PKR), and terms
+<img width="1417" height="903" alt="image" src="https://github.com/user-attachments/assets/fb6ec7d8-3845-4a4d-a060-13b8ea1f614f" />
+
 
 ### 📦 Inventory & Stock Management
 - **Products & Variants** — Products with multiple units (e.g., piece, dozen, box)
@@ -45,12 +57,8 @@
 - **Low Stock Alerts** — Monitor inventory levels with reorder thresholds
 - **Purchases** — Record purchases from vendors with cost prices
 - **Vendor Management** — Track vendors and vendor payments
+<img width="1438" height="918" alt="image" src="https://github.com/user-attachments/assets/001f8237-d15f-4c55-8343-8f678f6206b6" />
 
-### 🎛️ Filament Admin Panel
-- **Dashboard** — Store stats overview, revenue chart, orders-by-status chart, top products, and latest orders
-- **Full CRUD Resources** — Products, Categories, Brands, Orders, Customers, Vendors, Purchases, Sales, Coupons, Reviews, Returns/Exchanges, Stock Movements, Users, and more
-- **Inventory Management Page** — Dedicated inventory view with stock controls
-- **POS Terminal Page** — In-panel POS access for staff
 
 ---
 
